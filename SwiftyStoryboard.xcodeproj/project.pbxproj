@@ -9,7 +9,16 @@
 /* Begin PBXBuildFile section */
 		3CB545941D4557AA00C53E92 /* SwiftyStoryboard.h in Headers */ = {isa = PBXBuildFile; fileRef = 3CB545931D4557AA00C53E92 /* SwiftyStoryboard.h */; settings = {ATTRIBUTES = (Public, ); }; };
 		3CB5459B1D4557AA00C53E92 /* SwiftyStoryboard.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 3CB545901D4557AA00C53E92 /* SwiftyStoryboard.framework */; };
-		3CB545A01D4557AB00C53E92 /* SwiftyStoryboardTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = 3CB5459F1D4557AB00C53E92 /* SwiftyStoryboardTests.swift */; };
+		3CB545A01D4557AB00C53E92 /* StaticTypeSegueIdentifierSupportTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = 3CB5459F1D4557AB00C53E92 /* StaticTypeSegueIdentifierSupportTests.swift */; };
+		3CB545AB1D455A3D00C53E92 /* TypedSegueIdentifier.swift in Sources */ = {isa = PBXBuildFile; fileRef = 3CB545AA1D455A3D00C53E92 /* TypedSegueIdentifier.swift */; };
+		3CB545AD1D455D9200C53E92 /* StaticTypeSegueSupport.swift in Sources */ = {isa = PBXBuildFile; fileRef = 3CB545AC1D455D9200C53E92 /* StaticTypeSegueSupport.swift */; };
+		3CB545AF1D455F8600C53E92 /* StaticTypeSegueIdentifier.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = 3CB545AE1D455F8600C53E92 /* StaticTypeSegueIdentifier.storyboard */; };
+		3CB545B11D455F9400C53E92 /* TestVCs.swift in Sources */ = {isa = PBXBuildFile; fileRef = 3CB545B01D455F9400C53E92 /* TestVCs.swift */; };
+		3CB545B21D45603B00C53E92 /* TypedSegueIdentifier.swift in Sources */ = {isa = PBXBuildFile; fileRef = 3CB545AA1D455A3D00C53E92 /* TypedSegueIdentifier.swift */; };
+		3CB545B31D45603D00C53E92 /* StaticTypeSegueSupport.swift in Sources */ = {isa = PBXBuildFile; fileRef = 3CB545AC1D455D9200C53E92 /* StaticTypeSegueSupport.swift */; };
+		3CB545BD1D45A89900C53E92 /* TryCatch.h in Headers */ = {isa = PBXBuildFile; fileRef = 3CB545BB1D45A89900C53E92 /* TryCatch.h */; settings = {ATTRIBUTES = (Public, ); }; };
+		3CB545BE1D45A89900C53E92 /* TryCatch.m in Sources */ = {isa = PBXBuildFile; fileRef = 3CB545BC1D45A89900C53E92 /* TryCatch.m */; };
+		3CD737BA1D46B96900066F9E /* StaticTypeSegueSupportTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = 3CD737B91D46B96900066F9E /* StaticTypeSegueSupportTests.swift */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXContainerItemProxy section */
@@ -27,8 +36,16 @@
 		3CB545931D4557AA00C53E92 /* SwiftyStoryboard.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = SwiftyStoryboard.h; sourceTree = "<group>"; };
 		3CB545951D4557AA00C53E92 /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
 		3CB5459A1D4557AA00C53E92 /* SwiftyStoryboardTests.xctest */ = {isa = PBXFileReference; explicitFileType = wrapper.cfbundle; includeInIndex = 0; path = SwiftyStoryboardTests.xctest; sourceTree = BUILT_PRODUCTS_DIR; };
-		3CB5459F1D4557AB00C53E92 /* SwiftyStoryboardTests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SwiftyStoryboardTests.swift; sourceTree = "<group>"; };
+		3CB5459F1D4557AB00C53E92 /* StaticTypeSegueIdentifierSupportTests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = StaticTypeSegueIdentifierSupportTests.swift; sourceTree = "<group>"; };
 		3CB545A11D4557AB00C53E92 /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
+		3CB545AA1D455A3D00C53E92 /* TypedSegueIdentifier.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = TypedSegueIdentifier.swift; sourceTree = "<group>"; };
+		3CB545AC1D455D9200C53E92 /* StaticTypeSegueSupport.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = StaticTypeSegueSupport.swift; sourceTree = "<group>"; };
+		3CB545AE1D455F8600C53E92 /* StaticTypeSegueIdentifier.storyboard */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.storyboard; path = StaticTypeSegueIdentifier.storyboard; sourceTree = "<group>"; };
+		3CB545B01D455F9400C53E92 /* TestVCs.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = TestVCs.swift; sourceTree = "<group>"; };
+		3CB545B41D4568BE00C53E92 /* SwiftyStoryboardTests-Bridging-Header.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = "SwiftyStoryboardTests-Bridging-Header.h"; sourceTree = "<group>"; };
+		3CB545BB1D45A89900C53E92 /* TryCatch.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = TryCatch.h; sourceTree = "<group>"; };
+		3CB545BC1D45A89900C53E92 /* TryCatch.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = TryCatch.m; sourceTree = "<group>"; };
+		3CD737B91D46B96900066F9E /* StaticTypeSegueSupportTests.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = StaticTypeSegueSupportTests.swift; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -71,8 +88,12 @@
 		3CB545921D4557AA00C53E92 /* SwiftyStoryboard */ = {
 			isa = PBXGroup;
 			children = (
+				3CB545BB1D45A89900C53E92 /* TryCatch.h */,
+				3CB545BC1D45A89900C53E92 /* TryCatch.m */,
 				3CB545931D4557AA00C53E92 /* SwiftyStoryboard.h */,
 				3CB545951D4557AA00C53E92 /* Info.plist */,
+				3CB545AA1D455A3D00C53E92 /* TypedSegueIdentifier.swift */,
+				3CB545AC1D455D9200C53E92 /* StaticTypeSegueSupport.swift */,
 			);
 			path = SwiftyStoryboard;
 			sourceTree = "<group>";
@@ -80,8 +101,12 @@
 		3CB5459E1D4557AA00C53E92 /* SwiftyStoryboardTests */ = {
 			isa = PBXGroup;
 			children = (
-				3CB5459F1D4557AB00C53E92 /* SwiftyStoryboardTests.swift */,
+				3CB5459F1D4557AB00C53E92 /* StaticTypeSegueIdentifierSupportTests.swift */,
+				3CD737B91D46B96900066F9E /* StaticTypeSegueSupportTests.swift */,
 				3CB545A11D4557AB00C53E92 /* Info.plist */,
+				3CB545AE1D455F8600C53E92 /* StaticTypeSegueIdentifier.storyboard */,
+				3CB545B01D455F9400C53E92 /* TestVCs.swift */,
+				3CB545B41D4568BE00C53E92 /* SwiftyStoryboardTests-Bridging-Header.h */,
 			);
 			path = SwiftyStoryboardTests;
 			sourceTree = "<group>";
@@ -93,6 +118,7 @@
 			isa = PBXHeadersBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				3CB545BD1D45A89900C53E92 /* TryCatch.h in Headers */,
 				3CB545941D4557AA00C53E92 /* SwiftyStoryboard.h in Headers */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
@@ -184,6 +210,7 @@
 			isa = PBXResourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				3CB545AF1D455F8600C53E92 /* StaticTypeSegueIdentifier.storyboard in Resources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -194,6 +221,9 @@
 			isa = PBXSourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				3CB545AB1D455A3D00C53E92 /* TypedSegueIdentifier.swift in Sources */,
+				3CB545AD1D455D9200C53E92 /* StaticTypeSegueSupport.swift in Sources */,
+				3CB545BE1D45A89900C53E92 /* TryCatch.m in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -201,7 +231,11 @@
 			isa = PBXSourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
-				3CB545A01D4557AB00C53E92 /* SwiftyStoryboardTests.swift in Sources */,
+				3CB545B11D455F9400C53E92 /* TestVCs.swift in Sources */,
+				3CB545B21D45603B00C53E92 /* TypedSegueIdentifier.swift in Sources */,
+				3CB545A01D4557AB00C53E92 /* StaticTypeSegueIdentifierSupportTests.swift in Sources */,
+				3CB545B31D45603D00C53E92 /* StaticTypeSegueSupport.swift in Sources */,
+				3CD737BA1D46B96900066F9E /* StaticTypeSegueSupportTests.swift in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -310,6 +344,8 @@
 		3CB545A51D4557AB00C53E92 /* Debug */ = {
 			isa = XCBuildConfiguration;
 			buildSettings = {
+				CLANG_ALLOW_NON_MODULAR_INCLUDES_IN_FRAMEWORK_MODULES = NO;
+				CLANG_ENABLE_MODULES = YES;
 				DEFINES_MODULE = YES;
 				DYLIB_COMPATIBILITY_VERSION = 1;
 				DYLIB_CURRENT_VERSION = 1;
@@ -320,12 +356,16 @@
 				PRODUCT_BUNDLE_IDENTIFIER = com.gavrix.SwiftyStoryboard;
 				PRODUCT_NAME = "$(TARGET_NAME)";
 				SKIP_INSTALL = YES;
+				SWIFT_OBJC_BRIDGING_HEADER = "";
+				SWIFT_OPTIMIZATION_LEVEL = "-Onone";
 			};
 			name = Debug;
 		};
 		3CB545A61D4557AB00C53E92 /* Release */ = {
 			isa = XCBuildConfiguration;
 			buildSettings = {
+				CLANG_ALLOW_NON_MODULAR_INCLUDES_IN_FRAMEWORK_MODULES = NO;
+				CLANG_ENABLE_MODULES = YES;
 				DEFINES_MODULE = YES;
 				DYLIB_COMPATIBILITY_VERSION = 1;
 				DYLIB_CURRENT_VERSION = 1;
@@ -336,26 +376,32 @@
 				PRODUCT_BUNDLE_IDENTIFIER = com.gavrix.SwiftyStoryboard;
 				PRODUCT_NAME = "$(TARGET_NAME)";
 				SKIP_INSTALL = YES;
+				SWIFT_OBJC_BRIDGING_HEADER = "";
 			};
 			name = Release;
 		};
 		3CB545A81D4557AB00C53E92 /* Debug */ = {
 			isa = XCBuildConfiguration;
 			buildSettings = {
+				CLANG_ENABLE_MODULES = YES;
 				INFOPLIST_FILE = SwiftyStoryboardTests/Info.plist;
 				LD_RUNPATH_SEARCH_PATHS = "$(inherited) @executable_path/Frameworks @loader_path/Frameworks";
 				PRODUCT_BUNDLE_IDENTIFIER = com.gavrix.SwiftyStoryboardTests;
 				PRODUCT_NAME = "$(TARGET_NAME)";
+				SWIFT_OBJC_BRIDGING_HEADER = "SwiftyStoryboardTests/SwiftyStoryboardTests-Bridging-Header.h";
+				SWIFT_OPTIMIZATION_LEVEL = "-Onone";
 			};
 			name = Debug;
 		};
 		3CB545A91D4557AB00C53E92 /* Release */ = {
 			isa = XCBuildConfiguration;
 			buildSettings = {
+				CLANG_ENABLE_MODULES = YES;
 				INFOPLIST_FILE = SwiftyStoryboardTests/Info.plist;
 				LD_RUNPATH_SEARCH_PATHS = "$(inherited) @executable_path/Frameworks @loader_path/Frameworks";
 				PRODUCT_BUNDLE_IDENTIFIER = com.gavrix.SwiftyStoryboardTests;
 				PRODUCT_NAME = "$(TARGET_NAME)";
+				SWIFT_OBJC_BRIDGING_HEADER = "SwiftyStoryboardTests/SwiftyStoryboardTests-Bridging-Header.h";
 			};
 			name = Release;
 		};
@@ -378,6 +424,7 @@
 				3CB545A61D4557AB00C53E92 /* Release */,
 			);
 			defaultConfigurationIsVisible = 0;
+			defaultConfigurationName = Release;
 		};
 		3CB545A71D4557AB00C53E92 /* Build configuration list for PBXNativeTarget "SwiftyStoryboardTests" */ = {
 			isa = XCConfigurationList;
@@ -386,6 +433,7 @@
 				3CB545A91D4557AB00C53E92 /* Release */,
 			);
 			defaultConfigurationIsVisible = 0;
+			defaultConfigurationName = Release;
 		};
 /* End XCConfigurationList section */
 	};
