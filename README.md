@@ -78,8 +78,24 @@ Because of dynamic storyboard nature, some information is only possible to be ch
 There are two supported errors at the moment: 
 
 - `RuntimeSegueIdentifierError` thrown by `performSegue(segue: SegueIdentifier) throws` when segue identifier not found in the storyboard
+- `UknownSegueIdentifierStringError` thrown by `segueIdentifierFromSegue(segue: UIStoryboardSegue)` when trying to map segueIdentifier string to existing case in `SegueIdentifier` enum fails.
 - `RuntimeTypeMismatchError` thrown by `performSegue<U: UIViewController>(segueIdentifier: String, configure: (U)->())` when actual destination ViewController's type and the one expected by `configure` don't match.
 
+## Installation
+
+### Direct checkout
+
+Checkout this repository, copy `SwiftyStoryboard` folder into your project's 3rd party dependencies folder. Then drag `SwiftyStoryboard.xcodeproj` into your master project. Don't forget to add `SwiftyStoryboard` in in your master project's Target dependencies build phase.
+
+### Carthage
+
+In your Cartfile add the following line:
+
+```
+git "https://github.com/gavrix/SwiftyStoryboard.git" "master"
+```
+
+then use any [suitable way](http://link-to-carthage-how-to) of integrating carthage dependency into your project. 
 
 ## Credits
 
