@@ -47,5 +47,15 @@ class StaticTypeSegueIdentifierSupportTests: XCTestCase {
         }
     }
     
+    func testNonExistingSegueIdentifierString() {
+        let sourceVC = self.sourceViewController
+        let segueIdentifier = SourceViewController.SegueIdentifier.Segue2
+        let mockSegue = UIStoryboardSegue(identifier: "NonExistingSegueIdentifier", source: sourceVC, destination: sourceVC)
+        XCTAssertThrowsError(try sourceVC.segueIdentifierFromSegue(mockSegue),
+                             "\(segueIdentifier) is expected to throw UknownSegueIdentifierStringError error")
+        { error in
+            XCTAssert(error is UknownSegueIdentifierStringError, "Eexpected to throw error of type \(UknownSegueIdentifierStringError.self)")
+        }
+    }
     
 }
