@@ -8,7 +8,7 @@
 import Foundation
 import UIKit
 
-protocol StaticTypeSegueSupport: class {}
+public protocol StaticTypeSegueSupport: class {}
 
 
 private struct SwizzleKeys {

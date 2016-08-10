@@ -9,7 +9,7 @@ import Foundation
 import UIKit
 
 
-protocol StaticTypeSegueIdentifierSupport {
+public protocol StaticTypeSegueIdentifierSupport {
     associatedtype SegueIdentifier: RawRepresentable
 }
 
@@ -24,9 +24,17 @@ struct RuntimeSegueIdentifierError: ErrorType {
     }
 }
 
+struct UknownSegueIdentifierStringError: ErrorType {
+    var segueIdentifierString: String
+    
+    var description: String {
+        return "Unkown segueIdentifier \(segueIdentifierString) in storyboard."
+    }
+}
+
 extension StaticTypeSegueIdentifierSupport where Self: UIViewController, SegueIdentifier.RawValue == String {
     
-    func performSegue(segue: SegueIdentifier) throws {
+    public func performSegue(segue: SegueIdentifier) throws {
         do {
             try TryCatch.tryBlock {
                 self.performSegueWithIdentifier(segue.rawValue, sender: nil)
@@ -44,9 +52,9 @@ extension StaticTypeSegueIdentifierSupport where Self: UIViewController, SegueId
     }
 
     
-    func segueIdentifierFromSegue(segue: UIStoryboardSegue) -> SegueIdentifier {
+    public func segueIdentifierFromSegue(segue: UIStoryboardSegue) throws -> SegueIdentifier {
         guard let segueIdentifier = SegueIdentifier(rawValue: segue.identifier!) else {
-            fatalError("Unknown segue identifier: \(segue.identifier)")
+            throw UknownSegueIdentifierStringError(segueIdentifierString: segue.identifier!)
         }
         return segueIdentifier
     }
