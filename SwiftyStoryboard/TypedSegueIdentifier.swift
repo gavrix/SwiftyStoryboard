@@ -14,7 +14,7 @@ public protocol StaticTypeSegueIdentifierSupport {
 }
 
 
-struct RuntimeSegueIdentifierError: ErrorType {
+public struct RuntimeSegueIdentifierError: ErrorType {
 
     var segueIdentifier: String
     var runtimeErrorDescription: String
@@ -24,7 +24,7 @@ struct RuntimeSegueIdentifierError: ErrorType {
     }
 }
 
-struct UknownSegueIdentifierStringError: ErrorType {
+public struct UknownSegueIdentifierStringError: ErrorType {
     var segueIdentifierString: String
     
     var description: String {

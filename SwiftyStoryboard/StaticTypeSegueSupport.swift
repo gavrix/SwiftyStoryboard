@@ -21,7 +21,7 @@ private final class Box<V> {
     init(_ value: V) { self.value = value }
 }
 
-struct RuntimeTypeMismatchError: ErrorType {
+public struct RuntimeTypeMismatchError: ErrorType {
     var segueIdentifier: String
     var expectedViewControllerType: AnyClass
     var actualViewControllerType: AnyClass
@@ -36,7 +36,7 @@ struct RuntimeTypeMismatchError: ErrorType {
 
 extension StaticTypeSegueSupport where Self: UIViewController {
     
-    func performSegue<U: UIViewController>(segueIdentifier: String, configure: (U)->()) throws {
+    public func performSegue<U: UIViewController>(segueIdentifier: String, configure: (U)->()) throws {
         self.prepareForSegueConfigure(segueIdentifier, configure: configure)
         do {
             try TryCatch.tryBlock {
@@ -71,7 +71,7 @@ extension StaticTypeSegueSupport where Self: UIViewController {
         self.segueConfigureFunc = unsafeConfigure
     }
     
-    var segueConfigureFunc: ((UIStoryboardSegue) -> ())? {
+    private var segueConfigureFunc: ((UIStoryboardSegue) -> ())? {
         get {
             let box = objc_getAssociatedObject(self, &SwizzleKeys.ConfigureFuncKey) as? Box<((UIStoryboardSegue) -> ())?>
             return box?.value
@@ -109,7 +109,7 @@ extension StaticTypeSegueSupport where  Self:UIViewController,
                                         Self:StaticTypeSegueIdentifierSupport,
                                         Self.SegueIdentifier.RawValue == String {
     
-    func performSegue<U: UIViewController>(segue: SegueIdentifier, configure: (U) -> ()) throws {
+    public func performSegue<U: UIViewController>(segue: SegueIdentifier, configure: (U) -> ()) throws {
     
         self.prepareForSegueConfigure(segue.rawValue, configure: configure)
         try self.performSegue(segue)
