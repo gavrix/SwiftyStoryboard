@@ -34,6 +34,18 @@ public struct RuntimeTypeMismatchError: ErrorType {
     }
 }
 
+extension StaticTypeSegueSupport {
+    private var segueConfigureFunc: ((UIStoryboardSegue) -> ())? {
+        get {
+            let box = objc_getAssociatedObject(self, &SwizzleKeys.ConfigureFuncKey) as? Box<((UIStoryboardSegue) -> ())?>
+            return box?.value
+        }
+        set {
+            objc_setAssociatedObject(self, &SwizzleKeys.ConfigureFuncKey, Box(newValue), .OBJC_ASSOCIATION_RETAIN_NONATOMIC)
+        }
+    }
+}
+
 extension StaticTypeSegueSupport where Self: UIViewController {
     
     public func performSegue<U: UIViewController>(segueIdentifier: String, configure: (U)->()) throws {
@@ -71,29 +83,20 @@ extension StaticTypeSegueSupport where Self: UIViewController {
         self.segueConfigureFunc = unsafeConfigure
     }
     
-    private var segueConfigureFunc: ((UIStoryboardSegue) -> ())? {
-        get {
-            let box = objc_getAssociatedObject(self, &SwizzleKeys.ConfigureFuncKey) as? Box<((UIStoryboardSegue) -> ())?>
-            return box?.value
-        }
-        set {
-            objc_setAssociatedObject(self, &SwizzleKeys.ConfigureFuncKey, Box(newValue), .OBJC_ASSOCIATION_RETAIN_NONATOMIC)
-        }
-    }
-    
     private func swizzlePrepareforSegueIfNecessary() {
         guard objc_getAssociatedObject(self, &SwizzleKeys.SwizzledFlagKey) == nil else { return }
         
         typealias CastedFunc = @convention(c) (AnyObject, Selector, UIStoryboardSegue, AnyObject?) -> Void
         
         var originalPrepareForSegueImp: IMP! = nil
-        let myBlock : @convention(block) (AnyObject?, UIStoryboardSegue, AnyObject?) -> () = {[unowned self]
-            (_, segue, sender) in
-            self.segueConfigureFunc?(segue)
+        let myBlock : @convention(block) (UIViewController, UIStoryboardSegue, AnyObject?) -> () = {
+            (selfVC, segue, sender) in
+            let typedSegueSupported = selfVC as? StaticTypeSegueSupport
+            typedSegueSupported?.segueConfigureFunc?(segue)
             
             let originalPrepareForSegue = unsafeBitCast(originalPrepareForSegueImp!, CastedFunc.self)
-            originalPrepareForSegue(self, #selector(UIViewController.prepareForSegue(_:sender:)), segue, sender)
-            self.segueConfigureFunc = nil
+            originalPrepareForSegue(selfVC, #selector(UIViewController.prepareForSegue(_:sender:)), segue, sender)
+            typedSegueSupported?.segueConfigureFunc = nil
         }
         
         let newPrepareForSegueImp = imp_implementationWithBlock(unsafeBitCast(myBlock, AnyObject.self))
