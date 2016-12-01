@@ -18,14 +18,14 @@ class SourceViewController: UIViewController, StaticTypeSegueIdentifierSupport, 
     var performSegueWithIdentifierCalled: Bool = false
     var destinationViewController: UIViewController!
     
-    override func performSegueWithIdentifier(identifier: String, sender: AnyObject?) {
-        super.performSegueWithIdentifier(identifier, sender: sender)
+    override func performSegue(withIdentifier identifier: String, sender: Any?) {
+        super.performSegue(withIdentifier: identifier, sender: sender)
         self.performSegueWithIdentifierCalled = true
     }
     
-    override func prepareForSegue(segue: UIStoryboardSegue, sender: AnyObject?) {
-        super.prepareForSegue(segue, sender: sender)
-        self.destinationViewController = segue.destinationViewController
+    override func prepare(for segue: UIStoryboardSegue, sender: Any?) {
+        super.prepare(for: segue, sender: sender)
+        self.destinationViewController = segue.destination
     }
 }
 

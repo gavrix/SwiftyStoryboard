@@ -22,7 +22,7 @@ class StaticTypeSegueIdentifierSupportTests: XCTestCase {
 
     override func setUp() {
         super.setUp()
-        testStoryboard = UIStoryboard(name: "StaticTypeSegueIdentifier", bundle: NSBundle(forClass: self.dynamicType))
+        testStoryboard = UIStoryboard(name: "StaticTypeSegueIdentifier", bundle: Bundle(for: type(of: self)))
     }
         
     func testTypedSegueIdentifier() {
