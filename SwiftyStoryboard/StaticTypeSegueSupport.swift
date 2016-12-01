@@ -10,6 +10,7 @@ import UIKit
 
 public protocol StaticTypeSegueSupport: class {}
 
+let UnexpectedDestinationVCType = NSExceptionName("UnexpectedDestinationVCType")
 
 private struct SwizzleKeys {
     static var SwizzledFlagKey = 0
@@ -21,7 +22,7 @@ private final class Box<V> {
     init(_ value: V) { self.value = value }
 }
 
-public struct RuntimeTypeMismatchError: ErrorType {
+public struct RuntimeTypeMismatchError: Error {
     var segueIdentifier: String
     var expectedViewControllerType: AnyClass
     var actualViewControllerType: AnyClass
@@ -35,7 +36,7 @@ public struct RuntimeTypeMismatchError: ErrorType {
 }
 
 extension StaticTypeSegueSupport {
-    private var segueConfigureFunc: ((UIStoryboardSegue) -> ())? {
+    fileprivate var segueConfigureFunc: ((UIStoryboardSegue) -> ())? {
         get {
             let box = objc_getAssociatedObject(self, &SwizzleKeys.ConfigureFuncKey) as? Box<((UIStoryboardSegue) -> ())?>
             return box?.value
@@ -48,15 +49,15 @@ extension StaticTypeSegueSupport {
 
 extension StaticTypeSegueSupport where Self: UIViewController {
     
-    public func performSegue<U: UIViewController>(segueIdentifier: String, configure: (U)->()) throws {
+    public func performSegue<U: UIViewController>(_ segueIdentifier: String, configure: @escaping (U)->()) throws {
         self.prepareForSegueConfigure(segueIdentifier, configure: configure)
         do {
-            try TryCatch.tryBlock {
-                self.performSegueWithIdentifier(segueIdentifier, sender: nil)
+            try TryCatch.try {
+                self.performSegue(withIdentifier: segueIdentifier, sender: nil)
             }
         } catch (let error as NSError) {
-            if let exception = error.userInfo["exception"] as? NSException where
-                exception.name == "UnexpectedDestinationVCType" {
+            if let exception = error.userInfo["exception"] as? NSException ,
+                exception.name == UnexpectedDestinationVCType {
                 throw RuntimeTypeMismatchError(internalException: exception)
             } else {
                 throw error
@@ -64,16 +65,16 @@ extension StaticTypeSegueSupport where Self: UIViewController {
         }
     }
     
-    private func prepareForSegueConfigure<U: UIViewController>(segueIdentifier: String, configure: (U) -> ()) {
+    fileprivate func prepareForSegueConfigure<U: UIViewController>(_ segueIdentifier: String, configure: @escaping (U) -> ()) {
         swizzlePrepareforSegueIfNecessary()
         
-        func unsafeConfigure(rawSegue: UIStoryboardSegue) {
-            guard let destinationVC = rawSegue.destinationViewController as? U else {
-                NSException(name: "UnexpectedDestinationVCType",
+        func unsafeConfigure(_ rawSegue: UIStoryboardSegue) {
+            guard let destinationVC = rawSegue.destination as? U else {
+                NSException(name: UnexpectedDestinationVCType,
                             reason: nil,
                             userInfo: [
                                 "expectedType": U.self,
-                                "actualType": rawSegue.destinationViewController.dynamicType,
+                                "actualType": type(of: rawSegue.destination),
                                 "segueIdentifier": rawSegue.identifier!
                     ]).raise()
                 fatalError()// never used, workaround for NSException.raise() not marked as @noescape
@@ -83,7 +84,7 @@ extension StaticTypeSegueSupport where Self: UIViewController {
         self.segueConfigureFunc = unsafeConfigure
     }
     
-    private func swizzlePrepareforSegueIfNecessary() {
+    fileprivate func swizzlePrepareforSegueIfNecessary() {
         guard objc_getAssociatedObject(self, &SwizzleKeys.SwizzledFlagKey) == nil else { return }
         
         typealias CastedFunc = @convention(c) (AnyObject, Selector, UIStoryboardSegue, AnyObject?) -> Void
@@ -94,13 +95,14 @@ extension StaticTypeSegueSupport where Self: UIViewController {
             let typedSegueSupported = selfVC as? StaticTypeSegueSupport
             typedSegueSupported?.segueConfigureFunc?(segue)
             
-            let originalPrepareForSegue = unsafeBitCast(originalPrepareForSegueImp!, CastedFunc.self)
-            originalPrepareForSegue(selfVC, #selector(UIViewController.prepareForSegue(_:sender:)), segue, sender)
+            let originalPrepareForSegue = unsafeBitCast(originalPrepareForSegueImp!, to: CastedFunc.self)
+			
+            originalPrepareForSegue(selfVC, #selector(UIViewController.prepare(for:sender:)), segue, sender)
             typedSegueSupported?.segueConfigureFunc = nil
         }
         
-        let newPrepareForSegueImp = imp_implementationWithBlock(unsafeBitCast(myBlock, AnyObject.self))
-        let method = class_getInstanceMethod(self.dynamicType, #selector(UIViewController.prepareForSegue(_:sender:)))
+        let newPrepareForSegueImp = imp_implementationWithBlock(unsafeBitCast(myBlock, to: AnyObject.self))
+        let method = class_getInstanceMethod(type(of: self), #selector(UIViewController.prepare(for:sender:)))
         originalPrepareForSegueImp = method_setImplementation(method, newPrepareForSegueImp)
         
         objc_setAssociatedObject(self, &SwizzleKeys.SwizzledFlagKey, true, .OBJC_ASSOCIATION_COPY)
@@ -112,7 +114,7 @@ extension StaticTypeSegueSupport where  Self:UIViewController,
                                         Self:StaticTypeSegueIdentifierSupport,
                                         Self.SegueIdentifier.RawValue == String {
     
-    public func performSegue<U: UIViewController>(segue: SegueIdentifier, configure: (U) -> ()) throws {
+    public func performSegue<U: UIViewController>(_ segue: SegueIdentifier, configure: @escaping (U) -> ()) throws {
     
         self.prepareForSegueConfigure(segue.rawValue, configure: configure)
         try self.performSegue(segue)

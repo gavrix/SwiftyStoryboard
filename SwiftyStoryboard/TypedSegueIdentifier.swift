@@ -14,7 +14,7 @@ public protocol StaticTypeSegueIdentifierSupport {
 }
 
 
-public struct RuntimeSegueIdentifierError: ErrorType {
+public struct RuntimeSegueIdentifierError: Error {
 
     var segueIdentifier: String
     var runtimeErrorDescription: String
@@ -24,7 +24,7 @@ public struct RuntimeSegueIdentifierError: ErrorType {
     }
 }
 
-public struct UknownSegueIdentifierStringError: ErrorType {
+public struct UknownSegueIdentifierStringError: Error {
     var segueIdentifierString: String
     
     var description: String {
@@ -34,15 +34,15 @@ public struct UknownSegueIdentifierStringError: ErrorType {
 
 extension StaticTypeSegueIdentifierSupport where Self: UIViewController, SegueIdentifier.RawValue == String {
     
-    public func performSegue(segue: SegueIdentifier) throws {
+    public func performSegue(_ segue: SegueIdentifier) throws {
         do {
-            try TryCatch.tryBlock {
-                self.performSegueWithIdentifier(segue.rawValue, sender: nil)
+            try TryCatch.try {
+                self.performSegue(withIdentifier: segue.rawValue, sender: nil)
             }
             
         } catch (let error as NSError) {
             let exception = error.userInfo["exception"] as! NSException
-            if exception.description.containsString("\(segue.rawValue)") {
+            if exception.description.contains("\(segue.rawValue)") {
                 throw RuntimeSegueIdentifierError(segueIdentifier:segue.rawValue, runtimeErrorDescription: exception.description)
             } else {
                 throw error
@@ -52,7 +52,7 @@ extension StaticTypeSegueIdentifierSupport where Self: UIViewController, SegueId
     }
 
     
-    public func segueIdentifierFromSegue(segue: UIStoryboardSegue) throws -> SegueIdentifier {
+    public func segueIdentifierFromSegue(_ segue: UIStoryboardSegue) throws -> SegueIdentifier {
         guard let segueIdentifier = SegueIdentifier(rawValue: segue.identifier!) else {
             throw UknownSegueIdentifierStringError(segueIdentifierString: segue.identifier!)
         }
