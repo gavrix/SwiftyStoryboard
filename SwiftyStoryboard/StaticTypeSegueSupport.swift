@@ -93,11 +93,11 @@ extension StaticTypeSegueSupport where Self: UIViewController {
         let myBlock : @convention(block) (UIViewController, UIStoryboardSegue, AnyObject?) -> () = {
             (selfVC, segue, sender) in
             let typedSegueSupported = selfVC as? StaticTypeSegueSupport
-            typedSegueSupported?.segueConfigureFunc?(segue)
-            
-            let originalPrepareForSegue = unsafeBitCast(originalPrepareForSegueImp!, to: CastedFunc.self)
 			
+            let originalPrepareForSegue = unsafeBitCast(originalPrepareForSegueImp!, to: CastedFunc.self)
             originalPrepareForSegue(selfVC, #selector(UIViewController.prepare(for:sender:)), segue, sender)
+			
+			typedSegueSupported?.segueConfigureFunc?(segue)
             typedSegueSupported?.segueConfigureFunc = nil
         }
         
